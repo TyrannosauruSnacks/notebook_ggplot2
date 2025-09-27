@@ -1,0 +1,81 @@
+---
+title: "8_annotations"
+author: "Max Hachemeister"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+theme_set(theme_light())
+```
+
+```{r}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_point(aes(colour = factor(cyl))) +
+  labs(
+    x = "Engine displacement (litres)",
+    y = "Highway miles per gallon",
+    colour = "Number of cylinders",
+    title = "Mileage by engine size and cylinders",
+    subtitle = "Source: https://fueleconomy.gov"
+  )
+```
+
+```{r Text labels}
+df <- data.frame(x = 1:3, y = 3:1, family = c("sans", "serif", "comic"))
+ggplot(df, aes(x, y)) +
+  geom_text(aes(label = family, family = family))
+```
+```{r Fontfaces}
+df <- data.frame(x = 1, y = 3:1, face = c("plain", "bold", "italic"))
+  ggplot(df, aes(x, y)) +
+  geom_text(aes(label = face, fontface = face))
+```
+```{r alignment}
+df <- data.frame(
+  x = c(1, 1, 2, 2, 1.5),
+  y = c(1, 2, 1, 2, 1.5),
+  text = c(
+    "bottom-left", "top-left",
+    "bottom-right", "top-right", "center"
+  )
+)
+ggplot(df, aes(x, y)) +
+  geom_text(aes(label = text))
+ggplot(df, aes(x, y)) +
+  geom_text(aes(label = text), vjust = "inward", hjust = "inward")
+
+```
+```{r value text}
+df <- data.frame(
+  treatment = c("a", "b", "c"),
+  response = c(1.2, 3.4, 2.5)
+)
+
+ggplot(df, aes(treatment, response)) +
+  geom_point() +
+  geom_text(
+    mapping = aes(label = paste0("(", response, ")")),
+    nudge_x = -0.3
+  ) +
+  ylim(1.1, 3.6)
+```
+```{r check overlap}
+ggplot(mpg, aes(displ, hwy)) +
+  geom_text(aes(label = model)) +
+  xlim(1, 8)
+
+ggplot(mpg, aes(displ, hwy)) +
+  geom_text(aes(label = model), check_overlap = TRUE) +
+  xlim(1, 8)
+
+ggplot(mpg, aes(displ, hwy)) +
+  ggrepel::geom_text_repel(aes(label = model), max.overlaps = 50)+
+  xlim(1, 8)
+```
+ggplot(mpg, aes(displ, hwy)) +
+  geom_text(aes(label = model), check_overlap = TRUE) +
+  xlim(1, 8)
+
