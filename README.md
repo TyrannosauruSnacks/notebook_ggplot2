@@ -1,2 +1,2 @@
 # notebook_ggplot2
-Personal notes on "ggplo2: Elegant Graphics for Data Analysis" (3e)
+Personal notes on "ggplot2: Elegant Graphics for Data Analysis" (3e)
